@@ -5,8 +5,8 @@
 # description       : 缓存管理工具
 
 import redis
-from common.constants.constants import CommonConstants as Consts
-from common.utils.config_parse import Configuration
+from core_common.constants.constants import CommonConstants as Consts
+from core_common.utils.config_parse import Configuration
 
 
 class Cache:

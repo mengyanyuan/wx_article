@@ -8,8 +8,8 @@ import logging
 import os
 import time
 import inspect
-from common.constants.constants import CommonConstants as Consts
-from common.utils.config_parse import Configuration
+from core_common.constants.constants import CommonConstants as Consts
+from core_common.utils.config_parse import Configuration
 
 config = Configuration.config()
 

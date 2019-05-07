@@ -11,8 +11,8 @@ class Dict(dict):
     """
     字典操作工具类
     """
-    __setattr__ = dict.__setitem__
-    __getattr__ = dict.__getitem__
+    # __setattr__ = super.__setitem__
+    # __getattr__ = super.__getitem__
 
     @staticmethod
     def dict2obj(dictObj):
@@ -26,7 +26,7 @@ class Dict(dict):
                 return dictObj
             inst = Dict()
             for k, v in dictObj.items():
-                inst[k] = dict2obj(v)
+                inst[k] = Dict.dict2obj(v)
             return inst
         except Exception as e:
             print('将字典转换成对象失败，%s', e)
