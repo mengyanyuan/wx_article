@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 """
 Django settings for wx_articles project.
 
@@ -11,6 +12,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from core_common.constants.constants import CommonConstants as Consts
+from core_common.utils.config_parse import Configuration
+
+Config = Configuration.config()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -35,8 +40,24 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'db_model'
+    'db_model',
+    'rest_framework',
+    'api',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [],
+    # 设置全局分页
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination'
+}
+
+# 文件存放位置
+MEDIA_ROOT = os.path.join(BASE_DIR, 'upload/media').replace('\\', '/')
+MEDIA_URL = '/media/'
+
+# 覆盖默认的用户模型，使用自定义用户模型
+# 语 法：'app的名称.自定义用户模型的名称'
+AUTH_USER_MODEL = 'db_model.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -68,17 +89,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'wx_articles.wsgi.application'
 
-# Database
+# Database 数据库（MySQL）参数
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'django',
+#         'USER': 'root',
+#         'PASSWORD': 'zsx123456',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django',
-        'USER': 'root',
-        'PASSWORD': 'zsx123456',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'NAME': Config.get_value(Consts.DB_SECTION, Consts.DB_NAME),
+        'USER': Config.get_value(Consts.DB_SECTION, Consts.DB_USERNAME),
+        'PASSWORD': Config.get_value(Consts.DB_SECTION, Consts.DB_PASSWORD),
+        'HOST': Config.get_value(Consts.DB_SECTION, Consts.DB_HOST),
+        'PORT': Config.get_value(Consts.DB_SECTION, Consts.DB_PORT),
     }
 }
 
@@ -103,9 +134,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
+# 设置语言为简体中文
+LANGUAGE_CODE = Config.get_value(Consts.DJANGO_SECTION, Consts.DJANGO_LANGUAGE)
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
+# 设置时区
+TIME_ZONE = Config.get_value(Consts.DJANGO_SECTION, Consts.DJANGO_TIME_ZONE)
 
 USE_I18N = True
 

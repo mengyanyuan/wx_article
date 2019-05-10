@@ -1,7 +1,7 @@
 # Django
 
 #### Description
-用Django构建小程序服务端代码
+Build Tencent MicroApp server with Django of Python
 
 #### Software Architecture
 Software architecture description

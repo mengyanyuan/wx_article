@@ -31,7 +31,7 @@ def testdb(request):
     print(user)
 
     # 限制返回的数据 相当于 SQL 中的 OFFSET 0 LIMIT 2;可用于分页
-    User.objects.order_by('createTime')[0:2]
+    User.objects.order_by('-createTime')[0:2]
 
     # 数据排序
     User.objects.order_by('createTime')

@@ -13,7 +13,9 @@ class Configuration(object):
     配置文件解析
     """
 
-    def __init__(self, path=os.path.abspath(os.path.dirname(os.getcwd()) + './config/config.ini'), charset='utf-8'):
+    # os.path.abspath(os.path.dirname(os.getcwd()) + '/../config/global_config.ini')
+    def __init__(self, path=os.path.abspath(os.path.dirname(__file__) + '/../../config/global_config.ini'),
+                 charset='utf-8'):
         # print('配置文件路径：', path)
         self.__config_path = path
         self.__config = configparser.ConfigParser()
@@ -52,8 +54,9 @@ class Configuration(object):
         """
         return Configuration()
 
-# if __name__ == '__main__':
-#     config = Configuration()
-#     dicts = config.get_configs("DATASOURCE")
-#     print(dicts)
-#     print(config.get_value("DATASOURCE", "DB_NAME"))
+
+if __name__ == '__main__':
+    config = Configuration()
+    dicts = config.get_configs("DATASOURCE")
+    print(dicts)
+    print(config.get_value("DATASOURCE", "DB_NAME"))
